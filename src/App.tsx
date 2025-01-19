@@ -1,16 +1,13 @@
-import React from "react";
-// import { seedFakeEvents } from "./seedEvents";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Home } from "./pages/Home";
 
 function App() {
-  React.useEffect(() => {
-    // seedFakeEvents();
-  }, []);
-
   return (
-    <div className="App">
-      <h1>My Events App</h1>
-      {/* The rest of your app */}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
