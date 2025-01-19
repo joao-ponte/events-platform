@@ -3,7 +3,6 @@ type Event = {
   title: string;
   description: string;
   date: string;
-  // Add more fields as needed
 };
 
 interface EventCardProps {
@@ -16,7 +15,6 @@ export function EventCard({ event }: EventCardProps) {
       <h2>{event.title}</h2>
       <p>{event.description}</p>
       <p>Date: {event.date}</p>
-      {/* Or display other fields, like event.imageUrl */}
     </div>
   );
 }
