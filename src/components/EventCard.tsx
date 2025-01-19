@@ -1,9 +1,4 @@
-type Event = {
-  id: string;
-  title: string;
-  description: string;
-  date: string;
-};
+import { Event } from "../types"; // same shared type
 
 interface EventCardProps {
   event: Event;
