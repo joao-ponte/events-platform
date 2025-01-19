@@ -9,7 +9,7 @@ export const fakeEvents = [
       capacity: 20,
       createdBy: "fakeUser123",
       attendees: [],
-      imageUrl: "https://source.unsplash.com/random/300x200?yoga"
+      imageUrl: "https://picsum.photos/200/300"
     },
     {
       id: "2",
@@ -21,7 +21,7 @@ export const fakeEvents = [
       capacity: 50,
       createdBy: "fakeUser123",
       attendees: [],
-      imageUrl: "https://source.unsplash.com/random/300x200?hall"
+      imageUrl: "https://picsum.photos/200/300"
     },
     {
       id: "3",
@@ -33,7 +33,7 @@ export const fakeEvents = [
       capacity: 30,
       createdBy: "fakeUser123",
       attendees: [],
-      imageUrl: "https://source.unsplash.com/random/300x200?music"
+      imageUrl: "https://picsum.photos/200/300"
     },
     {
       id: "4",
@@ -45,7 +45,7 @@ export const fakeEvents = [
       capacity: 15,
       createdBy: "fakeUser123",
       attendees: [],
-      imageUrl: "https://source.unsplash.com/random/300x200?art"
+      imageUrl: "https://picsum.photos/200/300"
     },
     {
       id: "5",
@@ -57,7 +57,7 @@ export const fakeEvents = [
       capacity: 100,
       createdBy: "fakeUser123",
       attendees: [],
-      imageUrl: "https://source.unsplash.com/random/300x200?running"
+      imageUrl: "https://picsum.photos/200/300"
     },
     {
       id: "6",
@@ -69,7 +69,7 @@ export const fakeEvents = [
       capacity: 12,
       createdBy: "fakeUser123",
       attendees: [],
-      imageUrl: "https://source.unsplash.com/random/300x200?cooking"
+      imageUrl: "https://picsum.photos/200/300"
     },
     {
       id: "7",
@@ -81,7 +81,7 @@ export const fakeEvents = [
       capacity: 200,
       createdBy: "fakeUser123",
       attendees: [],
-      imageUrl: "https://source.unsplash.com/random/300x200?technology"
+      imageUrl: "https://picsum.photos/200/300"
     },
     {
       id: "8",
@@ -93,7 +93,7 @@ export const fakeEvents = [
       capacity: 80,
       createdBy: "fakeUser123",
       attendees: [],
-      imageUrl: "https://source.unsplash.com/random/300x200?farm"
+      imageUrl: "https://picsum.photos/200/300"
     },
     {
       id: "9",
@@ -105,7 +105,7 @@ export const fakeEvents = [
       capacity: 25,
       createdBy: "fakeUser123",
       attendees: [],
-      imageUrl: "https://source.unsplash.com/random/300x200?games"
+      imageUrl: "https://picsum.photos/200/300"
     },
     {
       id: "10",
@@ -117,7 +117,7 @@ export const fakeEvents = [
       capacity: 60,
       createdBy: "fakeUser123",
       attendees: [],
-      imageUrl: "https://source.unsplash.com/random/300x200?movie"
+      imageUrl: "https://picsum.photos/200/300"
     }
   ];
   
