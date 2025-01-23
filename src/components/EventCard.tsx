@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Event } from "../types";
 import { addAttendeeToEvent } from "../services/eventsApi";
 import "./eventCard.scss";
@@ -8,7 +9,7 @@ interface EventCardProps {
 }
 
 export function EventCard({ event, user }: EventCardProps) {
-  const totalAttendees = event.attendees.length;
+  const [attendees, setAttendees] = useState<string[]>(event.attendees); // Local state for attendees
 
   const handleSignUp = async () => {
     if (!user) {
@@ -17,7 +18,8 @@ export function EventCard({ event, user }: EventCardProps) {
     }
 
     try {
-      await addAttendeeToEvent(event.id, user.email); // Add the user's email to the event's attendees
+      await addAttendeeToEvent(event.id, user.email); // Add the user's email to Firestore
+      setAttendees((prev) => [...prev, user.email]); // Update local state with the new attendee
       alert(`Successfully signed up for ${event.title}!`);
     } catch (error) {
       console.error("Failed to sign up for the event:", error);
@@ -32,15 +34,15 @@ export function EventCard({ event, user }: EventCardProps) {
       <p className="text">Date: {event.date}</p>
       <p className="text">Location: {event.location}</p>
       <p className="text">
-        Capacity: {totalAttendees} / {event.capacity}
+        Capacity: {attendees.length} / {event.capacity}
       </p>
       <div className="buttonContainer">
         <button
           className="signUpButton"
           onClick={handleSignUp}
-          disabled={totalAttendees >= event.capacity}
+          disabled={attendees.length >= event.capacity}
         >
-          {totalAttendees >= event.capacity ? "Event Full" : "Sign up"}
+          {attendees.length >= event.capacity ? "Event Full" : "Sign up"}
         </button>
       </div>
     </div>
