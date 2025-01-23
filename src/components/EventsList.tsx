@@ -4,13 +4,17 @@ import { EventCard } from "./EventCard";
 import { Event } from "../types";
 import "./eventCard.scss";
 
-export function EventsList() {
+interface EventsListProps {
+  user: any;
+}
+
+export function EventsList({ user }: EventsListProps) {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const getEvents = async() => {
+    const getEvents = async () => {
       try {
         const fetchedEvents = await fetchEvents();
         setEvents(fetchedEvents);
@@ -19,7 +23,7 @@ export function EventsList() {
       } finally {
         setLoading(false);
       }
-    }
+    };
 
     getEvents();
   }, []);
@@ -29,9 +33,9 @@ export function EventsList() {
 
   return (
     <div>
-      {events.map(e => (
+      {events.map((e) => (
         <div className="container" key={e.id}>
-          <EventCard event={e} />
+          <EventCard event={e} user={user} />
         </div>
       ))}
     </div>

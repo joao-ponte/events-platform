@@ -5,7 +5,7 @@ export interface Event {
     date: string;
     time?: string;
     location?: string;
-    capacity?: number;
+    capacity: number;
     createdBy?: string;
     attendees: string[];
     imageUrl?: string;
