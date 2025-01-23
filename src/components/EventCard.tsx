@@ -1,15 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Event } from "../types";
 import { addAttendeeToEvent } from "../services/eventsApi";
 import "./eventCard.scss";
 
 interface EventCardProps {
   event: Event;
-  user: any; // User object from Firebase
+  user: any;
 }
 
 export function EventCard({ event, user }: EventCardProps) {
-  const [attendees, setAttendees] = useState<string[]>(event.attendees); // Local state for attendees
+  const [attendees, setAttendees] = useState<string[]>(event.attendees);
+  const [isSignedUp, setIsSignedUp] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (user && attendees.includes(user.email)) {
+      setIsSignedUp(true);
+    }
+  }, [user, attendees]);
 
   const handleSignUp = async () => {
     if (!user) {
@@ -17,9 +24,15 @@ export function EventCard({ event, user }: EventCardProps) {
       return;
     }
 
+    if (isSignedUp) {
+      alert("You are already signed up for this event.");
+      return;
+    }
+
     try {
-      await addAttendeeToEvent(event.id, user.email); // Add the user's email to Firestore
-      setAttendees((prev) => [...prev, user.email]); // Update local state with the new attendee
+      await addAttendeeToEvent(event.id, user.email);
+      setAttendees((prev) => [...prev, user.email]);
+      setIsSignedUp(true);
       alert(`Successfully signed up for ${event.title}!`);
     } catch (error) {
       console.error("Failed to sign up for the event:", error);
@@ -40,9 +53,9 @@ export function EventCard({ event, user }: EventCardProps) {
         <button
           className="signUpButton"
           onClick={handleSignUp}
-          disabled={attendees.length >= event.capacity}
+          disabled={isSignedUp || attendees.length >= event.capacity}
         >
-          {attendees.length >= event.capacity ? "Event Full" : "Sign up"}
+          {isSignedUp ? "Already Signed Up" : attendees.length >= event.capacity ? "Event Full" : "Sign up"}
         </button>
       </div>
     </div>
