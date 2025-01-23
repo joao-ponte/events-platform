@@ -1,15 +1,16 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { fetchEvents } from "../services/eventsApi";
 import { EventCard } from "./EventCard";
 import { Event } from "../types";
+import "./eventCard.scss";
 
 export function EventsList() {
-  const [events, setEvents] = React.useState<Event[]>([]);
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState<string | null>(null);
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  React.useEffect(() => {
-    async function getEvents() {
+  useEffect(() => {
+    const getEvents = async() => {
       try {
         const fetchedEvents = await fetchEvents();
         setEvents(fetchedEvents);
@@ -29,7 +30,9 @@ export function EventsList() {
   return (
     <div>
       {events.map(e => (
-        <EventCard key={e.id} event={e} />
+        <div className="container" key={e.id}>
+          <EventCard event={e} />
+        </div>
       ))}
     </div>
   );

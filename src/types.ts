@@ -1,5 +1,5 @@
 export interface Event {
-    id: string;           // Always present (doc.id)
+    id: string;
     title: string;
     description: string;
     date: string;
@@ -7,7 +7,6 @@ export interface Event {
     location?: string;
     capacity?: number;
     createdBy?: string;
-    attendees?: string[];
+    attendees: string[];
     imageUrl?: string;
 }
-  
