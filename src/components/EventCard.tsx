@@ -1,8 +1,6 @@
-import { useState, useEffect } from "react";
-import { Event } from "../types";
-import { addAttendeeToEvent } from "../services/eventsApi";
-import { initGoogleAPI, signInWithGoogle, addEventToGoogleCalendar } from "../config/googleCalendarUtils";
 import "./eventCard.scss";
+import { useEventSignUp } from "../hooks/useEventSignUp";
+import { Event } from "../types";
 
 interface EventCardProps {
   event: Event;
@@ -10,79 +8,13 @@ interface EventCardProps {
 }
 
 export function EventCard({ event, user }: EventCardProps) {
-  const [attendees, setAttendees] = useState<string[]>(event.attendees);
-  const [isSignedUp, setIsSignedUp] = useState<boolean>(false);
-
-  const eventDate = event.timestamp?.toDate();
-  const formattedDate = eventDate
-    ? eventDate.toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      })
-    : "Unknown Date";
-  const formattedTime = eventDate
-    ? eventDate.toLocaleTimeString("en-GB", {
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-    : "Unknown Time";
-
-  useEffect(() => {
-    if (user && attendees.includes(user.email)) {
-      setIsSignedUp(true);
-    }
-  }, [user, attendees]);
-
-  const handleSignUp = async () => {
-    if (!user) {
-      alert("Please sign in to register for this event.");
-      return;
-    }
-
-    if (isSignedUp) {
-      alert("You are already signed up for this event.");
-      return;
-    }
-
-    try {
-      await addAttendeeToEvent(event.id, user.email);
-      setAttendees((prev) => [...prev, user.email]);
-      setIsSignedUp(true);
-
-      const addToCalendar = window.confirm(
-        "Do you want to add this event to your Google Calendar?"
-      );
-
-      if (addToCalendar) {
-        await initGoogleAPI();
-        await signInWithGoogle();
-
-        const eventDetails = {
-          summary: event.title,
-          description: event.description,
-          location: event.location || "",
-          start: {
-            dateTime: eventDate?.toISOString() || "",
-            timeZone: "Europe/London",
-          },
-          end: {
-            dateTime: eventDate
-              ? new Date(eventDate.getTime() + 60 * 60 * 1000).toISOString()
-              : "",
-            timeZone: "Europe/London",
-          },
-        };
-
-        await addEventToGoogleCalendar(eventDetails);
-
-        alert(`Event successfully added to your Google Calendar! Event: ${event.title}`);
-      }
-    } catch (error) {
-      console.error("Failed to sign up or add to Google Calendar:", error);
-      alert("An error occurred while signing up. Please try again.");
-    }
-  };
+  const {
+    attendees,
+    isSignedUp,
+    handleSignUp,
+    formattedDate,
+    formattedTime,
+  } = useEventSignUp(event, user);
 
   return (
     <div className="eventCard">
