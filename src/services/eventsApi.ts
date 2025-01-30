@@ -6,8 +6,10 @@ import {
   addDoc, 
   updateDoc, 
   arrayUnion, 
-  Timestamp 
-} from "firebase/firestore";
+  Timestamp,
+  deleteDoc 
+} 
+from "firebase/firestore";
 import { db } from "../config/firebase";
 import { Event } from "../types";
 
@@ -56,6 +58,11 @@ export async function createEvent(eventData: Omit<Event, "id">): Promise<string>
   }
 }
 
+export async function updateEvent(eventId: string, eventData: Partial<Event>): Promise<void> {
+  const docRef = doc(db, "events", eventId);
+  await updateDoc(docRef, eventData);
+}
+
 export async function addAttendeeToEvent(eventId: string, email: string): Promise<void> {
   const docRef = doc(db, "events", eventId);
 
@@ -66,6 +73,17 @@ export async function addAttendeeToEvent(eventId: string, email: string): Promis
     console.log("Attendee added successfully.");
   } catch (error) {
     console.error("Error adding attendee to event:", error);
+    throw error;
+  }
+}
+
+export async function deleteEvent(eventId: string): Promise<void> {
+  const docRef = doc(db, "events", eventId);
+  try {
+    await deleteDoc(docRef);
+    console.log(`Event ${eventId} deleted successfully.`);
+  } catch (error) {
+    console.error("Error deleting event:", error);
     throw error;
   }
 }
