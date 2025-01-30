@@ -8,7 +8,6 @@ export const formatTimestamp = (timestamp: Timestamp | Date) => {
     };
   }
 
-  // 🔥 Convert Firestore Timestamp to JavaScript Date before formatting
   const date = timestamp instanceof Timestamp ? timestamp.toDate() : timestamp;
 
   const formattedDate = date.toLocaleDateString("en-GB", {

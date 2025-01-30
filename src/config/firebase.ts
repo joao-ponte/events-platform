@@ -1,4 +1,3 @@
-// firebase.ts
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut } from "firebase/auth";
@@ -38,7 +37,6 @@ export const signInStaff = async (email: string, password: string) => {
   }
 };
 
-// Sign Out
 export const logOut = async () => {
   try {
     await signOut(auth);

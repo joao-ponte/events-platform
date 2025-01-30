@@ -1,6 +1,6 @@
 // src/seedEvents.ts
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "./config/firebase";         // your Firebase config file
+import { db } from "./config/firebase";
 import { fakeEvents } from "./fakeEvents";
 
 export async function seedFakeEvents() {

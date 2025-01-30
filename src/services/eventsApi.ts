@@ -20,7 +20,7 @@ export async function fetchEvents(): Promise<Event[]> {
     return {
       id: docSnap.id,
       ...data,
-      timestamp: data.timestamp instanceof Timestamp ? data.timestamp : Timestamp.fromDate(new Date()), // 🔥 Ensure it's a Firestore Timestamp
+      timestamp: data.timestamp instanceof Timestamp ? data.timestamp : Timestamp.fromDate(new Date()),
     };
   });
 }
@@ -38,7 +38,7 @@ export async function fetchEventById(eventId: string): Promise<Event> {
   return {
     id: snapshot.id,
     ...data,
-    timestamp: data.timestamp instanceof Timestamp ? data.timestamp : Timestamp.fromDate(new Date()), // 🔥 Ensure Firestore Timestamp
+    timestamp: data.timestamp instanceof Timestamp ? data.timestamp : Timestamp.fromDate(new Date()),
   };
 }
 

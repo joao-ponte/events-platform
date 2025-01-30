@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { EventsList } from "../components/EventsList";
 import { signInWithGoogle, logOut } from "../config/firebase";
 import { StaffLoginModal } from "../components/StaffLoginModal";
 import { CreateEventModal } from "../components/CreateEventModal";
+import { fetchEvents } from "../services/eventsApi";
 import "./home.scss";
 
 export function Home() {
@@ -10,8 +11,23 @@ export function Home() {
   const [isStaff, setIsStaff] = useState<boolean>(false);
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const [showEventModal, setShowEventModal] = useState<boolean>(false);
-  const [refreshEvents, setRefreshEvents] = useState<boolean>(false);
-  
+  const [events, setEvents] = useState<any[]>([]);
+
+
+  useEffect(() => {
+    const loadEvents = async () => {
+      try {
+        const fetchedEvents = await fetchEvents();
+        setEvents(fetchedEvents);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+
+    loadEvents();
+  }, []);
+
+
   const handleGoogleSignIn = async () => {
     try {
       const { user, isStaff } = await signInWithGoogle();
@@ -61,11 +77,11 @@ export function Home() {
       </header>
       <main>
         {isStaff && (
-          <button className="create-event-button" onClick={() => setShowEventModal(true)}> 
+          <button className="create-event-button" onClick={() => setShowEventModal(true)}>
             Create Events
           </button>
         )}
-        <EventsList user={user} refresh={refreshEvents} />
+        <EventsList user={user} events={events} />
       </main>
 
       {showLoginModal && (
@@ -79,9 +95,9 @@ export function Home() {
       )}
 
       {showEventModal && (
-        <CreateEventModal 
-          onClose={() => setShowEventModal(false)} 
-          onEventCreated={() => setRefreshEvents(!refreshEvents)} 
+        <CreateEventModal
+          onClose={() => setShowEventModal(false)}
+          onEventCreated={(newEvent) => setEvents((prevEvents) => [newEvent, ...prevEvents])}
         />
       )}
     </div>
