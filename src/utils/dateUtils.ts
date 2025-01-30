@@ -1,6 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 
-export const formatTimestamp = (timestamp: Timestamp) => {
+export const formatTimestamp = (timestamp: Timestamp | Date) => {
   if (!timestamp) {
     return {
       formattedDate: "Unknown Date",
@@ -8,7 +8,9 @@ export const formatTimestamp = (timestamp: Timestamp) => {
     };
   }
 
-  const date = timestamp.toDate();
+  // 🔥 Convert Firestore Timestamp to JavaScript Date before formatting
+  const date = timestamp instanceof Timestamp ? timestamp.toDate() : timestamp;
+
   const formattedDate = date.toLocaleDateString("en-GB", {
     day: "2-digit",
     month: "2-digit",

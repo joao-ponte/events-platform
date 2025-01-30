@@ -1,7 +1,7 @@
 // firebase.ts
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -13,23 +13,27 @@ const firebaseConfig = {
   appId: "1:369564617115:web:b3e111ed1635d48455f93e",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-// Initialize Firestore
 export const db = getFirestore(app);
-
-// Initialize Auth
 export const auth = getAuth(app);
 
-// Google Sign-In
 export const signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
   try {
     const result = await signInWithPopup(auth, provider);
-    return result.user; // Returns the signed-in user
+    return { user: result.user, isStaff: false };
   } catch (error) {
-    console.error("Error signing in with Google: ", error);
+    console.error("Google Sign-In Error:", error);
+    throw error;
+  }
+};
+
+export const signInStaff = async (email: string, password: string) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return { user: userCredential.user, isStaff: true };
+  } catch (error) {
+    console.error("Staff Sign-In Error:", error);
     throw error;
   }
 };
