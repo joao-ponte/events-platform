@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); 
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,10 +15,9 @@
     background: white;
     padding: 20px;
     border-radius: 10px;
-    width: 350px;
+    width: 400px;
     text-align: center;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    position: relative;
     animation: fadeIn 0.3s ease-in-out;
   }
   
@@ -28,7 +27,8 @@
     color: #333;
   }
   
-  .modal input {
+  .modal input,
+  .modal textarea {
     width: 90%;
     padding: 10px;
     margin: 8px 0;
@@ -37,7 +37,13 @@
     font-size: 1rem;
   }
   
-  .modal input:focus {
+  .modal textarea {
+    resize: vertical;
+    height: 80px;
+  }
+  
+  .modal input:focus,
+  .modal textarea:focus {
     border-color: #007bff;
     outline: none;
   }
@@ -86,4 +92,12 @@
       transform: translateY(0);
     }
   }
+
+  .success-message {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #28a745;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
   
