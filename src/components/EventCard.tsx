@@ -5,9 +5,10 @@ import { Event } from "../types";
 interface EventCardProps {
   event: Event;
   user: any;
+  isStaff: boolean;
 }
 
-export function EventCard({ event, user }: EventCardProps) {
+export function EventCard({ event, user, isStaff }: EventCardProps) {
   const {
     attendees,
     isSignedUp,
@@ -27,13 +28,17 @@ export function EventCard({ event, user }: EventCardProps) {
         Capacity: {attendees.length} / {event.capacity}
       </p>
       <div className="buttonContainer">
-        <button
-          className="signUpButton"
-          onClick={handleSignUp}
-          disabled={isSignedUp || attendees.length >= event.capacity}
-        >
-          {isSignedUp ? "Already Signed Up" : attendees.length >= event.capacity ? "Event Full" : "Sign up"}
-        </button>
+        {isStaff ? (
+          <button className="actionButton">Edit</button>
+        ) : (
+          <button
+            className="actionButton"
+            onClick={handleSignUp}
+            disabled={isSignedUp || attendees.length >= event.capacity}
+          >
+            {isSignedUp ? "Already Signed Up" : attendees.length >= event.capacity ? "Event Full" : "Sign up"}
+          </button>
+        )}
       </div>
     </div>
   );

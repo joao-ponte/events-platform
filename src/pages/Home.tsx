@@ -81,7 +81,7 @@ export function Home() {
             Create Events
           </button>
         )}
-        <EventsList user={user} events={events} />
+        <EventsList user={user} events={events} isStaff={isStaff} />
       </main>
 
       {showLoginModal && (
