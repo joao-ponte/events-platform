@@ -1,53 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { EventsList } from "../components/EventsList";
-import { signInWithGoogle, logOut } from "../config/firebase";
 import { StaffLoginModal } from "../components/StaffLoginModal";
-import { CreateEventModal } from "../components/CreateEventModal";
-import { EditEventModal } from "../components/EditEventModal";
-import { fetchEvents } from "../services/eventsApi";
+import { ModalManager } from "../components/ModalManager";
+import { useAuth } from "../hooks/useAuth";
+import { useEvents } from "../hooks/useEvents";
 import "./home.scss";
 
 export function Home() {
-  const [user, setUser] = useState<any>(null);
-  const [isStaff, setIsStaff] = useState<boolean>(false);
+  const { user, isStaff, handleGoogleSignIn, handleSignOut, setUser, setIsStaff } = useAuth();
+  const { events, addEvent, updateEvent, deleteEvent } = useEvents();
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const [showEventModal, setShowEventModal] = useState<boolean>(false);
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
-  const [events, setEvents] = useState<any[]>([]);
-
-  useEffect(() => {
-    const loadEvents = async () => {
-      try {
-        const fetchedEvents = await fetchEvents();
-        setEvents(fetchedEvents);
-      } catch (error) {
-        console.error("Error fetching events:", error);
-      }
-    };
-
-    loadEvents();
-  }, []);
-
-  const handleGoogleSignIn = async () => {
-    try {
-      const { user, isStaff } = await signInWithGoogle();
-      setUser(user);
-      setIsStaff(isStaff);
-    } catch (error) {
-      console.error("Google Sign-In Error:", error);
-    }
-  };
-
-  const handleSignOut = async () => {
-    try {
-      await logOut();
-      setUser(null);
-      setIsStaff(false);
-    } catch (error) {
-      console.error("Failed to sign out:", error);
-    }
-  };
 
   return (
     <div className="home">
@@ -60,18 +25,12 @@ export function Home() {
           {user ? (
             <>
               <p className="welcome-message">Welcome, {user.email}!</p>
-              <button className="sign-out-button" onClick={handleSignOut}>
-                Sign out
-              </button>
+              <button className="sign-out-button" onClick={handleSignOut}>Sign out</button>
             </>
           ) : (
             <>
-              <button className="sign-in-button" onClick={handleGoogleSignIn}>
-                User Login (Google)
-              </button>
-              <button className="staff-login-button" onClick={() => setShowLoginModal(true)}>
-                Staff Login
-              </button>
+              <button className="sign-in-button" onClick={handleGoogleSignIn}>User Login (Google)</button>
+              <button className="staff-login-button" onClick={() => setShowLoginModal(true)}>Staff Login</button>
             </>
           )}
         </div>
@@ -79,9 +38,7 @@ export function Home() {
 
       <main>
         {isStaff && (
-          <button className="create-event-button" onClick={() => setShowEventModal(true)}>
-            Create Event
-          </button>
+          <button className="create-event-button" onClick={() => setShowEventModal(true)}>Create Event</button>
         )}
 
         <EventsList
@@ -105,28 +62,16 @@ export function Home() {
         />
       )}
 
-      {showEventModal && (
-        <CreateEventModal
-          onClose={() => setShowEventModal(false)}
-          onEventCreated={(newEvent) => setEvents((prevEvents) => [newEvent, ...prevEvents])} // Add new event to the top
-        />
-      )}
-
-      {showEditModal && selectedEventId && (
-        <EditEventModal
-          eventId={selectedEventId}
-          onClose={() => setShowEditModal(false)}
-          onEventUpdated={(updatedEvent) => {
-            setEvents((prevEvents) => {
-              const filteredEvents = prevEvents.filter((event) => event.id !== updatedEvent.id);
-              return [updatedEvent, ...filteredEvents]; // Move updated event to the top
-            });
-          }}
-          onEventDeleted={(deletedEventId) => {
-            setEvents((prevEvents) => prevEvents.filter((event) => event.id !== deletedEventId)); // Remove deleted event
-          }}
-        />
-      )}
+      <ModalManager
+        showEventModal={showEventModal}
+        showEditModal={showEditModal}
+        selectedEventId={selectedEventId}
+        onCloseCreateEvent={() => setShowEventModal(false)}
+        onCloseEditEvent={() => setShowEditModal(false)}
+        onEventCreated={addEvent}
+        onEventUpdated={updateEvent}
+        onEventDeleted={deleteEvent}
+      />
     </div>
   );
 }
