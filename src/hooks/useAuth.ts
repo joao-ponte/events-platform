@@ -20,6 +20,7 @@ export function useAuth() {
       await logOut();
       setUser(null);
       setIsStaff(false);
+      window.location.reload();
     } catch (error) {
       console.error("Failed to sign out:", error);
     }
