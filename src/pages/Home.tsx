@@ -8,7 +8,7 @@ import "./home.scss";
 
 export function Home() {
   const { user, isStaff, handleGoogleSignIn, handleSignOut, setUser, setIsStaff } = useAuth();
-  const { events, addEvent, updateEvent, deleteEvent } = useEvents();
+  const { events, loading, addEvent, updateEvent, deleteEvent } = useEvents();
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const [showEventModal, setShowEventModal] = useState<boolean>(false);
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
@@ -44,6 +44,7 @@ export function Home() {
         <EventsList
           user={user}
           events={events}
+          loading={loading} 
           isStaff={isStaff}
           onEditEvent={(eventId) => {
             setSelectedEventId(eventId);

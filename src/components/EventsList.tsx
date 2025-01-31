@@ -6,11 +6,13 @@ interface EventsListProps {
   user: any;
   events: Event[];
   isStaff: boolean;
+  loading: boolean;
   onEditEvent: (eventId: string) => void;
 }
 
-export function EventsList({ user, events, isStaff, onEditEvent }: EventsListProps) {
-  if (events.length === 0) return <p>Loading events...</p>;
+export function EventsList({ user, events, loading, isStaff, onEditEvent }: EventsListProps) {
+  if (loading) return <p>Loading events...</p>; 
+  if (events.length === 0) return <p>No events available. Create one to get started!</p>;
 
   return (
     <div>
