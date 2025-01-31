@@ -10,7 +10,7 @@ interface EventCardProps {
 }
 
 export function EventCard({ event, user, isStaff, onEditEvent }: EventCardProps) {
-  const { attendees, isSignedUp, handleSignUp, formattedDate, formattedTime } = useEventSignUp(event, user);
+  const { attendees = [], isSignedUp, handleSignUp, formattedDate, formattedTime } = useEventSignUp(event, user);
 
   return (
     <div className="eventCard">
@@ -21,14 +21,14 @@ export function EventCard({ event, user, isStaff, onEditEvent }: EventCardProps)
       <p className="text">Date: {formattedDate}</p>
       <p className="text">Time: {formattedTime}</p>
       <p className="text">Location: {event.location}</p>
-      <p className="text">Capacity: {attendees.length} / {event.capacity}</p>
+      <p className="text">Capacity: {attendees?.length || 0} / {event.capacity}</p>
 
       <div className="buttonContainer">
         {isStaff ? (
           <button className="actionButton" onClick={() => onEditEvent(event.id)}>Edit</button>
         ) : (
-          <button className="actionButton" onClick={handleSignUp} disabled={isSignedUp || attendees.length >= event.capacity}>
-            {isSignedUp ? "Already Signed Up" : attendees.length >= event.capacity ? "Event Full" : "Sign up"}
+          <button className="actionButton" onClick={handleSignUp} disabled={isSignedUp || (attendees?.length || 0) >= event.capacity}>
+            {isSignedUp ? "Already Signed Up" : (attendees?.length || 0) >= event.capacity ? "Event Full" : "Sign up"}
           </button>
         )}
       </div>

@@ -3,11 +3,11 @@ import { addAttendeeToEvent } from "../services/eventsApi";
 import { Event } from "../types";
 
 export const useAttendees = (event: Event, user: any) => {
-  const [attendees, setAttendees] = useState<string[]>(event.attendees);
+  const [attendees, setAttendees] = useState<string[]>(event.attendees || []);
   const [isSignedUp, setIsSignedUp] = useState<boolean>(false);
 
   useEffect(() => {
-    if (user && attendees.includes(user.email)) {
+    if (user && attendees?.includes(user.email)) {
       setIsSignedUp(true);
     }
   }, [user, attendees]);
@@ -28,3 +28,4 @@ export const useAttendees = (event: Event, user: any) => {
 
   return { attendees, isSignedUp, addAttendee };
 };
+

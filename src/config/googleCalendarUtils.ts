@@ -1,7 +1,7 @@
 import { gapi } from "gapi-script";
 
 const CLIENT_ID = "1071208782844-q8bncbuivi74ep32shvj0jao6mpvq5pj.apps.googleusercontent.com";
-const API_KEY = "AIzaSyBqL85LSkl-fPNwqUJ9HM59axikbJJpv8M";
+const API_KEY = "AIzaSyCZsILb2OlLOqsZGyzcXOj1bbhowqhQPpk";
 const SCOPES = "https://www.googleapis.com/auth/calendar.events";
 
 export const initGoogleAPI = async () => {
@@ -21,11 +21,22 @@ export const initGoogleAPI = async () => {
 };
 
 export const signInWithGoogle = async () => {
-  const auth = gapi.auth2.getAuthInstance();
-  if (!auth.isSignedIn.get()) {
-    await auth.signIn();
+  try {
+    const auth = gapi.auth2.getAuthInstance();
+    if (!auth.isSignedIn.get()) {
+      await auth.signIn({ prompt: "select_account" });
+    }
+    const user = auth.currentUser.get();
+
+    return {
+      email: user.getBasicProfile().getEmail(),
+      name: user.getBasicProfile().getName(),
+      token: user.getAuthResponse().id_token,
+    };
+  } catch (error) {
+    console.error("Google Sign-In Error:", error);
+    throw error;
   }
-  return auth.currentUser.get(); 
 };
 
 export const addEventToGoogleCalendar = async (event: {
