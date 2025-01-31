@@ -1,0 +1,152 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content h2 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.modal input,
+.modal textarea {
+    width: 90%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.modal textarea {
+    resize: vertical;
+    height: 80px;
+}
+
+.modal input:focus,
+.modal textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.modal button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.modal button:first-of-type {
+    background: #007bff;
+    color: white;
+}
+
+.modal button:first-of-type:hover {
+    background: #0056b3;
+}
+
+.modal button:last-of-type {
+    background: #ccc;
+    color: #333;
+}
+
+.modal button:last-of-type:hover {
+    background: #bbb;
+}
+
+.error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.success-message {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #28a745;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.warning {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #d9534f;
+    margin-bottom: 10px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.attendee-list {
+    list-style: none;
+    padding: 0;
+}
+
+.attendee-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.removeButton {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.removeButton:hover {
+    background: #c82333;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.deleteButton {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+  
+  .deleteButton:hover {
+    background: #c82333;
+  }  
