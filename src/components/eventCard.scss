@@ -3,7 +3,7 @@
     padding: 20px;
 }
 
-.eventCard {
+.event-card {
     background-color: #fff;
     border: 2px solid #ddd;
     border-radius: 36px;
@@ -31,13 +31,13 @@
     }   
 }
 
-.buttonContainer {
+.button-container {
     display: flex;
     justify-content: end;
     margin-top: 12px;
 }
 
-.actionButton {
+.action-button {
     color: #02003f;
     background-color: #fff;
     border: 2px solid #02003f;

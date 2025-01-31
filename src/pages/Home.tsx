@@ -18,19 +18,18 @@ export function Home() {
     <div className="home">
       <header className="header">
         <div className="logo-container">
-          <img className="logo" src="../public/logo.svg" alt="My Events Platform Logo" />
           <h1>My Events Platform</h1>
         </div>
         <div className="auth-buttons">
           {user ? (
             <>
-              <p className="welcome-message">Welcome, {user.email}!</p>
-              <button className="sign-out-button" onClick={handleSignOut}>Sign out</button>
+              <p className="welcome-message">Welcome, {isStaff ? 'Staff' : user.displayName}!</p>
+              <button className="header-button" onClick={handleSignOut}>Sign out</button>
             </>
           ) : (
             <>
-              <button className="sign-in-button" onClick={handleGoogleSignIn}>User Login (Google)</button>
-              <button className="staff-login-button" onClick={() => setShowLoginModal(true)}>Staff Login</button>
+              <button className="header-button" onClick={handleGoogleSignIn}>User Login (Google)</button>
+              <button className="header-button" onClick={() => setShowLoginModal(true)}>Staff Login</button>
             </>
           )}
         </div>
@@ -38,7 +37,7 @@ export function Home() {
 
       <main>
         {isStaff && (
-          <button className="create-event-button" onClick={() => setShowEventModal(true)}>Create Event</button>
+          <button className="action-button" onClick={() => setShowEventModal(true)}>Create Event</button>
         )}
 
         <EventsList
