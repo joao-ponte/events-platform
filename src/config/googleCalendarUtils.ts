@@ -1,8 +1,8 @@
 import { gapi } from "gapi-script";
 
-const CLIENT_ID = "1071208782844-q8bncbuivi74ep32shvj0jao6mpvq5pj.apps.googleusercontent.com";
-const API_KEY = "AIzaSyCZsILb2OlLOqsZGyzcXOj1bbhowqhQPpk";
-const SCOPES = "https://www.googleapis.com/auth/calendar.events";
+const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
+const SCOPES = import.meta.env.VITE_GOOGLE_SCOPES;
 
 export const initGoogleAPI = async () => {
   return new Promise<void>((resolve, reject) => {

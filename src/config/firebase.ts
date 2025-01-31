@@ -2,19 +2,19 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB8oeDkuXIa66iciceXxDstLezgsVbpQsQ",
-  authDomain: "events-platform-595a1.firebaseapp.com",
-  projectId: "events-platform-595a1",
-  storageBucket: "events-platform-595a1.appspot.com",
-  messagingSenderId: "369564617115",
-  appId: "1:369564617115:web:b3e111ed1635d48455f93e",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
+
 
 export const signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
